@@ -15,6 +15,15 @@ Plugin 'tmhedberg/SimpylFold'
 "Plugin 'klen/python-mode'
 "自动完成"
 Plugin 'Valloric/YouCompleteMe'
+" Sniips
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+" 多个插件 Tab 共享
+Plugin 'ervandew/supertab'
+"多重选取
+Plugin 'terryma/vim-multiple-cursors'
+"Emmet
+Plugin 'mattn/emmet-vim'
 "代码检查与高亮"
 Plugin 'scrooloose/syntastic'
 "PEP8风格检查
@@ -26,6 +35,9 @@ Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 "Git支持
 Plugin 'tpope/vim-fugitive'
+" markdown 实时预览
+Plugin 'iamcco/markdown-preview.vim'
+Plugin 'iamcco/mathjax-support-for-mkdp'
 "树形目录
 Plugin 'scrooloose/nerdtree'
 "快速注释<Leader>c<space>
@@ -147,9 +159,9 @@ set autowrite
 
 "Don't use swap file    
 "If you edit a file from diff terminal it will useful
-"set nobackup
+set nobackup
 "set nowirtebackup
-"set noswapfile
+set noswapfile
 
 "better copy & paste
 set pastetoggle=<F2>
@@ -161,9 +173,9 @@ set mouse=a "Mouse on whit Alt and click"
 
 "Search Seting
 "Remove highlight Of last search
-noremap <C-n> :nohl<CR>
-vnoremap <C-n> :nohl<CR>
-inoremap <C-n> :nohl<CR>
+noremap <C-\> :nohl<CR>
+vnoremap <C-\> <Esc>:nohl<CR>
+inoremap <C-\> <ESC>:nohl<CR>
 set hlsearch
 set incsearch   "show match while typing
 set ignorecase  "ignorecase search by default
@@ -171,6 +183,22 @@ set smartcase   "do not ignorecase when pattrn have Upcase
 
 ""map sort function
 vnoremap <Leader>s :sort<CR>
+
+" Emmet Config
+" Help https://www.zfanw.com/blog/zencoding-vim-tutorial-chinese.html
+" Enable in different mode
+"nonly enable (n)ormal mode functions.
+"enable all functions, which is equal to(inv)
+"enable all function in (a)ll mode.
+let g:user_emmet_mode='n'    
+let g:user_emmet_leader_key='<C-Y>'
+inoremap <C-e> <C-Y>,
+" Enable just for html/css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+
+
 
 "括号配对
 :inoremap ( ()<ESC>i
