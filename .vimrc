@@ -104,6 +104,11 @@ set expandtab
 set autoindent 
 set fileformat=unix
 
+"YouCompleteMe 配置
+let g:ycm_global_ycm_extra_conf='~/.vimndle/YouCompleteMe/third_party/ycmdp/ycm/.ycm_extra_conf.py'
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_python_binary_path = '/usr/bin/python3'
+
 "AutoPEP8 配置
 let g:autopip8_disable_show_diff=1
 
