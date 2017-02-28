@@ -202,11 +202,12 @@ imap <C-c> <Esc><Leader>c<space>
 "enable all functions, which is equal to(inv)
 "enable all function in (a)ll mode.
 let g:user_emmet_mode='n'    
-let g:user_emmet_leader_key='<C-Y>'
-inoremap <C-e> <C-Y>,
+let g:user_emmet_leader_key='<C-y>'
 " Enable just for html/css
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+"autocmd FileType html,css EmmetInstall
+let g:user_emmet_expandabbr_key='<Tab>'
+imap <C-e> <Esc><C-y>,
 
 
 
