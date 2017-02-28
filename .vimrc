@@ -15,11 +15,11 @@ Plugin 'tmhedberg/SimpylFold'
 "Plugin 'klen/python-mode'
 "自动完成"
 Plugin 'Valloric/YouCompleteMe'
-" Sniips
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+" Sniips(改变Tab键行为)
+"Plugin 'SirVer/ultisnips'
+"Plugin 'honza/vim-snippets'
 " 多个插件 Tab 共享
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 "多重选取
 Plugin 'terryma/vim-multiple-cursors'
 "Emmet
@@ -148,6 +148,7 @@ map <c-down> ddp
 imap <C-up> <Esc><c-up>
 imap <C-down> <Esc>ddp
 imap <C-BS> <Esc>db
+imap <C-v>  <Esc><C-v>
 
 "comband select line to one  /using in css js ect.
 vmap Q gq
@@ -183,6 +184,11 @@ set smartcase   "do not ignorecase when pattrn have Upcase
 
 ""map sort function
 vnoremap <Leader>s :sort<CR>
+
+" 快速注释 <C-c>
+vmap <C-c> <Leader>c<space>
+nmap <C-c> <Leader>c<space>
+imap <C-c> <Esc><Leader>c<space>
 
 " Emmet Config
 " Help https://www.zfanw.com/blog/zencoding-vim-tutorial-chinese.html
