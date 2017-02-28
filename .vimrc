@@ -236,7 +236,9 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 "create new tab
-nnoremap <Leader>t <esc>tabnew<CR>
+map <Leader>t <esc>:tabnew<CR>
+"close the tab
+map <Leader>w <esc>:tabclose<CR>
 
 "easier moving between tabs
 map <Leader>n <esc>:tabprevious<CR>
