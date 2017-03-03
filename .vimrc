@@ -15,17 +15,27 @@ Plugin 'tmhedberg/SimpylFold'
 "Plugin 'klen/python-mode'
 "自动完成"
 Plugin 'Valloric/YouCompleteMe'
-" Sniips(改变Tab键行为)
-"Plugin 'SirVer/ultisnips'
-"Plugin 'honza/vim-snippets'
+" Snips(改变Tab键行为)
+Plugin 'SirVer/ultisnips'
+" SnipsLib
+Plugin 'honza/vim-snippets'
+"Plugin 'Psycojoker/UltiSnips'
 " 多个插件 Tab 共享
 "Plugin 'ervandew/supertab'
 "多重选取
 Plugin 'terryma/vim-multiple-cursors'
 "Emmet
 Plugin 'mattn/emmet-vim'
+"括号匹配
+Plugin 'Raimondi/delimitMate'
+"环绕符号(套括号,引号)
+"Plugin 'tpope/vim-surround'
 "代码检查与高亮"
 Plugin 'scrooloose/syntastic'
+" Jinja代码高亮
+Plugin 'Glench/Vim-Jinja2-Syntax'
+"python实时代码检查
+Plugin 'kevinw/pyflakes-vim'
 "PEP8风格检查
 Plugin 'nvie/vim-flake8'
 "PEP8格式化
@@ -33,8 +43,8 @@ Plugin 'tell-k/vim-autopep8'
 "配色方案"
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
-"Git支持
-Plugin 'tpope/vim-fugitive'
+"Git支持(不常用)
+"Plugin 'tpope/vim-fugitive'
 " markdown 实时预览
 Plugin 'iamcco/markdown-preview.vim'
 Plugin 'iamcco/mathjax-support-for-mkdp'
@@ -107,7 +117,18 @@ set fileformat=unix
 "YouCompleteMe 配置
 let g:ycm_global_ycm_extra_conf='~/.vimndle/YouCompleteMe/third_party/ycmdp/ycm/.ycm_extra_conf.py'
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"配置python路径,以支持跳转到头文件
 let g:ycm_python_binary_path = '/usr/bin/python3'
+"更改列表选择快捷键
+"let g:ycm_key_list_select_completion = [‘<c-n>‘, ‘<Down>‘]
+"let g:ycm_key_list_previous_completion = [‘<c-p>‘, ‘<Up>‘]
+
+"UltiSnips 配置
+"let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsJumpForwardTrigger="<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+"使jinjia的snips在html文档中启用
+autocmd FileType html UltiSnipsAddFiletypes jinja
 
 "AutoPEP8 配置
 let g:autopip8_disable_show_diff=1
@@ -204,7 +225,7 @@ imap <C-c> <Esc><Leader>c<space>
 let g:user_emmet_mode='n'    
 let g:user_emmet_leader_key='<C-y>'
 " Enable just for html/css
-let g:user_emmet_install_global = 0
+let g:user_emmet_install_global = 1
 "autocmd FileType html,css EmmetInstall
 imap <C-e> <Esc><C-y>,
 
@@ -212,22 +233,22 @@ imap <C-e> <Esc><C-y>,
 
 
 "括号配对
-:inoremap ( ()<ESC>i
-:inoremap ) <c-r>=ClosePair(')')<CR>
-":inoremap { {<CR>}<ESC>O
-:inoremap { {}<ESC>i
-:inoremap } <c-r>=ClosePair('}')<CR>
-:inoremap [ []<ESC>i
-:inoremap ] <c-r>=ClosePair(']')<CR>
-:inoremap " ""<ESC>i
-:inoremap ' ''<ESC>i
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endfunction
+":inoremap ( ()<ESC>i
+":inoremap ) <c-r>=ClosePair(')')<CR>
+"":inoremap { {<CR>}<ESC>O
+":inoremap { {}<ESC>i
+":inoremap } <c-r>=ClosePair('}')<CR>
+":inoremap [ []<ESC>i
+":inoremap ] <c-r>=ClosePair(']')<CR>
+":inoremap " ""<ESC>i
+":inoremap ' ''<ESC>i
+"function! ClosePair(char)
+    "if getline('.')[col('.') - 1] == a:char
+        "return "\<Right>"
+    "else
+        "return a:char
+    "endif
+"endfunction
 
 
 "multi display & moving
@@ -253,3 +274,42 @@ map <Leader>e <esc>:e.<CR>
 
 "run python
 nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+
+" 解决YCM UltiSnips冲突
+" 效果:<Tab>在YCM列表中当前高亮为Snips时触发Snips否则跳到下一条
+" 使用方向键移动关标不触发snips
+" 参考:http://blog.csdn.net/qq_20336817/article/details/51115411
+function! g:UltiSnips_Complete()
+  call UltiSnips#ExpandSnippet()
+  if g:ulti_expand_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      call UltiSnips#JumpForwards()
+      if g:ulti_jump_forwards_res == 0
+        return "\<TAB>"
+      endif
+    endif
+  endif
+  return ""
+endfunction
+
+function! g:UltiSnips_Reverse()
+  call UltiSnips#JumpBackwards()
+  if g:ulti_jump_backwards_res == 0
+    return "\<C-P>"
+  endif
+
+  return ""
+endfunction
+
+
+if !exists("g:UltiSnipsJumpForwardTrigger")
+  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+endif
+if !exists("g:UltiSnipsJumpBackwardTrigger")
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+endif
+
+au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger     . " <C-R>=g:UltiSnips_Complete()<cr>"
+au InsertEnter * exec "inoremap <silent> " .     g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
