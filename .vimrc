@@ -115,7 +115,7 @@ set autoindent
 set fileformat=unix
 
 "YouCompleteMe 配置
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "配置python路径,以支持跳转到头文件
 let g:ycm_python_binary_path = '/usr/bin/python3'
@@ -250,10 +250,12 @@ map <Leader>m <esc>:tabnext<CR>
 
 map <Leader>e <esc>:e.<CR>
 
-"run code
+"<F4> to debug ,<F5> to run
 autocmd filetype python nnoremap <F5> :up <bar> exec '!python '.shellescape('%')<CR>
 autocmd filetype c nnoremap <F5> :up <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype c nnoremap <F4> :up <bar> :!gcc % -o `basename % .c` && gdb `basename % .c`<CR>
 autocmd filetype cpp nnoremap <F5> :up <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F4> :up <bar> :!g++ % -o `basename % .cpp` && gdb `basename % .cpp` <CR>
 autocmd filetype java nnoremap <F5> :up <bar> :!javac %; java `basename % .java`<CR>
 " 解决YCM UltiSnips冲突
 " 效果:<Tab>在YCM列表中当前高亮为Snips时触发Snips否则跳到下一条
