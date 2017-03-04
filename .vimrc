@@ -48,6 +48,8 @@ Plugin 'altercation/vim-colors-solarized'
 " markdown 实时预览
 Plugin 'iamcco/markdown-preview.vim'
 Plugin 'iamcco/mathjax-support-for-mkdp'
+"Youdao 划词翻译
+Plugin 'iamcco/dict.vim'
 "树形目录
 Plugin 'scrooloose/nerdtree'
 "快速注释<Leader>c<space>
@@ -64,6 +66,9 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  Apearance                                  "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "外观配置
 "set nu
@@ -106,13 +111,9 @@ set nofoldenable
 "Rebind <leader> key
 let mapleader = " "
 
-set tabstop=4 
-set softtabstop=4 
-set shiftwidth=4 
-set textwidth=79 
-set expandtab 
-set autoindent 
-set fileformat=unix
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Autocomplete                                 "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "YouCompleteMe 配置
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
@@ -130,133 +131,6 @@ let g:ycm_python_binary_path = '/usr/bin/python3'
 "使jinjia的snips在html文档中启用
 autocmd FileType html UltiSnipsAddFiletypes jinja
 
-"AutoPEP8 配置
-let g:autopip8_disable_show_diff=1
-
-"Index for Full Stack前端缩进
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2 |
-set encoding=utf-8 |
-"Showing length
-set number     "show line numbers
-set tw=79      "width of length
-"set nowarp     "don't automattically wrap on load
-set fo-=t      "don't automattically warp text when typing
-set colorcolumn=80
-highlight ColorColumn ctermbg=233  "grey line at right
-let g:ctrlp_max_height = 30
-set wildignore+=*.pyc               "ignore somefile on ctrlp list
-set wildignore+=*_build/*
-set wildignore+=*/coverage/*
-
-"set history reg bigger
-set history=700
-set undolevels=700
-
-"标示行末空白字符
-"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-" highlight tabs and trailing spaces
-"set listchars=tab:>-,trail:-
-"set list
-
-" save using F12
-map <F12> :up<CR>
-map <C-F12> :x!<CR>
-imap <F12> <Esc><F12><CR>
-imap <C-F12> <Esc><C-F12>
-
-" move line up or dn
-imap <C-d> <Esc>yyp
-map <C-up> <up>ddp<up>
-map <c-down> ddp
-imap <C-up> <Esc><c-up>
-imap <C-down> <Esc>ddp
-imap <C-BS> <Esc>db
-imap <C-v>  <Esc><C-v>
-
-"comband select line to one  /using in css js ect.
-vmap Q gq
-nmap Q gqap
-
-"auto read & write
-set autoread
-set autowrite
-
-"Don't use swap file    
-"If you edit a file from diff terminal it will useful
-set nobackup
-"set nowirtebackup
-set noswapfile
-
-"better copy & paste
-set pastetoggle=<F2>
-set clipboard=unnamed
-
-"Mouse and backspace
-set mouse=a "Mouse on whit Alt and click"
-"set bs=2    "BackSpace to del on insert mode (default)
-
-"Search Seting
-"Remove highlight Of last search
-noremap <C-\> :nohl<CR>
-vnoremap <C-\> <Esc>:nohl<CR>
-inoremap <C-\> <ESC>:nohl<CR>
-set hlsearch
-set incsearch   "show match while typing
-set ignorecase  "ignorecase search by default
-set smartcase   "do not ignorecase when pattrn have Upcase
-
-""map sort function
-vnoremap <Leader>s :sort<CR>
-
-" 快速注释 <C-c>
-vmap <C-c> <Leader>c<space>
-nmap <C-c> <Leader>c<space>
-imap <C-c> <Esc><Leader>c<space>
-
-" Emmet Config
-" Help https://www.zfanw.com/blog/zencoding-vim-tutorial-chinese.html
-" Enable in different mode
-"nonly enable (n)ormal mode functions.
-"enable all functions, which is equal to(inv)
-"enable all function in (a)ll mode.
-let g:user_emmet_mode='n'    
-let g:user_emmet_leader_key='<C-y>'
-" Enable just for html/css
-let g:user_emmet_install_global = 1
-"autocmd FileType html,css EmmetInstall
-imap <C-e> <Esc><C-y>,
-
-"multi display & moving
-set splitbelow
-set splitright
-"使用C-hjkl切换布局
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-"create new tab
-map <Leader>t <esc>:tabnew<CR>
-"close the tab
-map <Leader>w <esc>:tabclose<CR>
-
-"easier moving between tabs
-map <Leader>n <esc>:tabprevious<CR>
-map <Leader>m <esc>:tabnext<CR>
-
-map <Leader>e <esc>:e.<CR>
-
-"<F4> to debug ,<F5> to run
-autocmd filetype python nnoremap <F5> :up <bar> exec '!python '.shellescape('%')<CR>
-autocmd filetype c nnoremap <F5> :up <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-autocmd filetype c nnoremap <F4> :up <bar> :!gcc % -o `basename % .c` && gdb `basename % .c`<CR>
-autocmd filetype cpp nnoremap <F5> :up <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-autocmd filetype cpp nnoremap <F4> :up <bar> :!g++ % -o `basename % .cpp` && gdb `basename % .cpp` <CR>
-autocmd filetype java nnoremap <F5> :up <bar> :!javac %; java `basename % .java`<CR>
 " 解决YCM UltiSnips冲突
 " 效果:<Tab>在YCM列表中当前高亮为Snips时触发Snips否则跳到下一条
 " 使用方向键移动关标不触发snips
@@ -295,3 +169,182 @@ endif
 
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger     . " <C-R>=g:UltiSnips_Complete()<cr>"
 au InsertEnter * exec "inoremap <silent> " .     g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Code Standard                                "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"AutoPEP8 配置
+let g:autopip8_disable_show_diff=1
+
+set tabstop=4 
+set softtabstop=4 
+set shiftwidth=4 
+set textwidth=79 
+set expandtab 
+set autoindent 
+set fileformat=unix
+
+"Index for Full Stack前端缩进
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+set encoding=utf-8 |
+"Showing length
+set number     "show line numbers
+set tw=79      "width of length
+"set nowarp     "don't automattically wrap on load
+set fo-=t      "don't automattically warp text when typing
+set colorcolumn=80
+highlight ColorColumn ctermbg=23  "grey line at right
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc               "ignore somefile on ctrlp list
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+
+"set history reg bigger
+set history=700
+set undolevels=700
+
+"标示行末空白字符
+"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+" highlight tabs and trailing spaces
+"set listchars=tab:>-,trail:-
+"set list
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  Translate                                  "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"--普通模式下，<Leader>d 即可翻译光标下的文本，并在命令行回显
+nmap <silent> <Leader>d <Plug>DictSearch
+
+"--可视化模式下，<Leader>d 即可翻译选中的文本，并在命令行回显
+vmap <silent> <Leader>d <Plug>DictVSearch
+
+"--普通模式下，<Leader><Leader>d 即可翻译光标下的文本，并且在Dict新窗口显示
+nmap <Leader><Leader>d <Plug>DictWSearch
+"--可视化模式下，<Leader><Leader>d 即可翻译选中的文本，并且在Dict新窗口显示
+vmap <Leader><Leader>d <Plug>DictWVSearch
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               Custom Shortcut                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" save using F12
+map <F12> :up<CR>
+map <C-F12> :x!<CR>
+inoremap <F12> <Esc><F12><CR>
+imap <C-F12> <Esc><C-F12>
+
+" move line up or dn
+imap <C-d> <Esc>yyp
+map <C-up> <up>ddp<up>
+map <c-down> ddp
+imap <C-up> <Esc><c-up>
+imap <C-down> <Esc>ddp
+imap <C-BS> <Esc>db
+imap <C-v>  <Esc><C-v>
+
+"better copy & paste
+set pastetoggle=<F2>
+set clipboard=unnamed
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Buffer                                    "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"comband select line to one  /using in css js ect.
+vmap Q gq
+nmap Q gqap
+
+"auto read & write
+set autoread
+set autowrite
+
+"Don't use swap file    
+"If you edit a file from diff terminal it will useful
+set nobackup
+"set nowirtebackup
+set noswapfile
+
+"Mouse and backspace
+set mouse=a "Mouse on whit Alt and click"
+"set bs=2    "BackSpace to del on insert mode (default)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Search Seting                                "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Remove highlight Of last search
+noremap <C-\> :nohl<CR>
+vnoremap <C-\> <Esc>:nohl<CR>
+inoremap <C-\> <ESC>:nohl<CR>
+set hlsearch
+set incsearch   "show match while typing
+set ignorecase  "ignorecase search by default
+set smartcase   "do not ignorecase when pattrn have Upcase
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    Sort                                     "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+vnoremap <Leader>s :sort<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Comment                                   "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+vmap <C-c> <Leader>c<space>
+nmap <C-c> <Leader>c<space>
+imap <C-c> <Esc><Leader>c<space>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    Emmet                                    "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Help https://www.zfanw.com/blog/zencoding-vim-tutorial-chinese.html
+" Enable in different mode
+"nonly enable (n)ormal mode functions.
+"enable all functions, which is equal to(inv)
+"enable all function in (a)ll mode.
+let g:user_emmet_mode='n'    
+let g:user_emmet_leader_key='<C-y>'
+" Enable just for html/css
+let g:user_emmet_install_global = 1
+"autocmd FileType html,css EmmetInstall
+imap <C-e> <Esc><C-y>,
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Layout                                    "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"multi display & moving
+set splitbelow
+set splitright
+"使用C-hjkl切换布局
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"create new tab
+map <Leader>t <esc>:tabnew<CR>
+"close the tab
+map <Leader>w <esc>:tabclose<CR>
+
+"easier moving between tabs
+map <Leader>n <esc>:tabprevious<CR>
+map <Leader>m <esc>:tabnext<CR>
+
+map <Leader>e <esc>:e.<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Running                                   "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"<F4> to debug ,<F5> to run
+autocmd filetype python nnoremap <F5> :up <bar> exec '!python '.shellescape('%')<CR>
+autocmd filetype c nnoremap <F5> :up <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype c nnoremap <F4> :up <bar> :!gcc % -o `basename % .c` && gdb `basename % .c`<CR>
+autocmd filetype cpp nnoremap <F5> :up <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F4> :up <bar> :!g++ % -o `basename % .cpp` && gdb `basename % .cpp` <CR>
+autocmd filetype java nnoremap <F5> :up <bar> :!javac %; java `basename % .java`<CR>
