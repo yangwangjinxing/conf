@@ -235,7 +235,11 @@ vmap <Leader><Leader>d <Plug>DictWVSearch
 map <F12> :up<CR>
 map <C-F12> :x!<CR>
 inoremap <F12> <Esc><F12><CR>
-imap <C-F12> <Esc><C-F12>
+imap <C-F12> <Esc>:x!<CR>
+" exit without save
+imap <M-F12> <Esc>:q!<CR>
+nmap <M-F12> <Esc>:q!<CR>
+
 
 " move line up or dn
 imap <C-d> <Esc>yyp
@@ -244,7 +248,7 @@ map <c-down> ddp
 imap <C-up> <Esc><c-up>
 imap <C-down> <Esc>ddp
 imap <C-BS> <Esc>db
-imap <C-v>  <Esc><C-v>
+imap <C-v>  <Esc>l<C-v>
 
 "better copy & paste
 set pastetoggle=<F2>
@@ -312,6 +316,14 @@ let g:user_emmet_leader_key='<C-y>'
 let g:user_emmet_install_global = 1
 "autocmd FileType html,css EmmetInstall
 imap <C-e> <Esc><C-y>,
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  MarkDown                                   "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <silent> <F8> <Plug>MarkdownPreview        " for normal mode
+imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
+nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
+imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Layout                                    "
