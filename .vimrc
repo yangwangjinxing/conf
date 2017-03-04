@@ -115,7 +115,7 @@ set autoindent
 set fileformat=unix
 
 "YouCompleteMe 配置
-let g:ycm_global_ycm_extra_conf='~/.vimndle/YouCompleteMe/third_party/ycmdp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "配置python路径,以支持跳转到头文件
 let g:ycm_python_binary_path = '/usr/bin/python3'
@@ -229,28 +229,6 @@ let g:user_emmet_install_global = 1
 "autocmd FileType html,css EmmetInstall
 imap <C-e> <Esc><C-y>,
 
-
-
-
-"括号配对
-":inoremap ( ()<ESC>i
-":inoremap ) <c-r>=ClosePair(')')<CR>
-"":inoremap { {<CR>}<ESC>O
-":inoremap { {}<ESC>i
-":inoremap } <c-r>=ClosePair('}')<CR>
-":inoremap [ []<ESC>i
-":inoremap ] <c-r>=ClosePair(']')<CR>
-":inoremap " ""<ESC>i
-":inoremap ' ''<ESC>i
-"function! ClosePair(char)
-    "if getline('.')[col('.') - 1] == a:char
-        "return "\<Right>"
-    "else
-        "return a:char
-    "endif
-"endfunction
-
-
 "multi display & moving
 set splitbelow
 set splitright
@@ -272,9 +250,11 @@ map <Leader>m <esc>:tabnext<CR>
 
 map <Leader>e <esc>:e.<CR>
 
-"run python
-nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
-
+"run code
+autocmd filetype python nnoremap <F5> :up <bar> exec '!python '.shellescape('%')<CR>
+autocmd filetype c nnoremap <F5> :up <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F5> :up <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype java nnoremap <F5> :up <bar> :!javac %; java `basename % .java`<CR>
 " 解决YCM UltiSnips冲突
 " 效果:<Tab>在YCM列表中当前高亮为Snips时触发Snips否则跳到下一条
 " 使用方向键移动关标不触发snips
