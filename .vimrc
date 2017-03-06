@@ -98,8 +98,8 @@ syntax on
 " Enable folding 开启代码折叠//热键za
 set foldmethod=indent   "按缩进折叠"
 set foldlevel=99"
-" Enable folding with the spacebar//使用空格折叠
-nnoremap f za
+" Enable folding with the spacebar//使用f折叠
+"nnoremap f za
 "开启折叠预览
 let g:SimpylFold_docstring_preview=1
 set nofoldenable
@@ -123,6 +123,8 @@ let g:ycm_python_binary_path = '/usr/bin/python3'
 "更改列表选择快捷键
 "let g:ycm_key_list_select_completion = [‘<c-n>‘, ‘<Down>‘]
 "let g:ycm_key_list_previous_completion = [‘<c-p>‘, ‘<Up>‘]
+"AutoFix Alt-f
+nnoremap <S-f> :YcmCompleter FixIt<CR>
 
 "UltiSnips 配置
 "let g:UltiSnipsExpandTrigger="<c-j>"
@@ -232,13 +234,13 @@ vmap <Leader><Leader>d <Plug>DictWVSearch
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " save using F12
-map <F12> :up<CR>
-map <C-F12> :x!<CR>
-inoremap <F12> <Esc><F12><CR>
-imap <C-F12> <Esc>:x!<CR>
+noremap <F12> :up<CR>
+noremap <C-F12> :x!<CR>
+imap <F12> <Esc><F12>
+imap <C-F12> <Esc><C-F12>
 " exit without save
-imap <M-F12> <Esc>:q!<CR>
-nmap <M-F12> <Esc>:q!<CR>
+nnoremap <M-F12> <Esc>:q!<CR>
+imap <M-F12> <Esc><M-F12>
 
 
 " move line up or dn
@@ -355,8 +357,20 @@ map <Leader>e <esc>:e.<CR>
 
 "<F4> to debug ,<F5> to run
 autocmd filetype python nnoremap <F5> :up <bar> exec '!python '.shellescape('%')<CR>
+autocmd filetype python imap <F5> <Esc><F5>
+
 autocmd filetype c nnoremap <F5> :up <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-autocmd filetype c nnoremap <F4> :up <bar> :!gcc % -o `basename % .c` && gdb `basename % .c`<CR>
+autocmd filetype c nnoremap <F4> :up <bar> :!gcc % -g -o `basename % .c` && cgdb `basename % .c`<CR>
+autocmd filetype c imap <F5> <Esc><F5>
+autocmd filetype c imap <F4> <Esc><F4>
+
 autocmd filetype cpp nnoremap <F5> :up <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-autocmd filetype cpp nnoremap <F4> :up <bar> :!g++ % -o `basename % .cpp` && gdb `basename % .cpp` <CR>
+autocmd filetype cpp nnoremap <F4> :up <bar> :!g++ % -g -o `basename % .cpp` && cgdb `basename % .cpp` <CR>
+autocmd filetype cpp imap <F5> <Esc><F5>
+autocmd filetype cpp imap <F4> <Esc><F4>
+
 autocmd filetype java nnoremap <F5> :up <bar> :!javac %; java `basename % .java`<CR>
+autocmd filetype java imap <F5> <Esc><F5>
+
+autocmd FileType sh nnoremap <F5> :up <bar> :!chmod +x % && ./%
+
