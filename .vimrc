@@ -322,10 +322,10 @@ imap <C-e> <Esc><C-y>,
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  MarkDown                                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <silent> <F8> <Plug>MarkdownPreview        " for normal mode
-imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
-nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
-imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
+autocmd filetype md map <silent> <F8> <Plug>MarkdownPreview        " for normal mode
+autocmd filetype md imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
+autocmd filetype md nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
+autocmd filetype md imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Layout                                    "
@@ -372,5 +372,6 @@ autocmd filetype cpp imap <F4> <Esc><F4>
 autocmd filetype java nnoremap <F5> :up <bar> :!javac %; java `basename % .java`<CR>
 autocmd filetype java imap <F5> <Esc><F5>
 
-autocmd FileType sh nnoremap <F5> :up <bar> :!chmod +x % && ./%
+autocmd FileType sh nnoremap <F5> :up <bar> :!chmod +x % && ./%<CR>
+autocmd FileType sh imap <F5> <Esc><F5>
 
