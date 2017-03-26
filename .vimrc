@@ -344,19 +344,16 @@ nnoremap <C-H> <C-W><C-H>
 map <Leader>t <esc>:tabnew<CR>
 "close the tab
 map <Leader>w <esc>:tabclose<CR>
-
-"easier moving between tabs
-map <Leader>n <esc>:tabprevious<CR>
-map <Leader>m <esc>:tabnext<CR>
-
+"open the exprole
 map <Leader>e <esc>:e.<CR>
+"Leader [n,m] were disable please use C-A-[PgUp,PgDn] to shitch tab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Running                                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "<F4> to debug ,<F5> to run
-autocmd filetype python nnoremap <F5> :up <bar> exec '!python '.shellescape('%')<CR>
+autocmd filetype python nnoremap <F5> :up <bar> exec '!python3 '.shellescape('%')<CR>
 autocmd filetype python imap <F5> <Esc><F5>
 
 autocmd filetype c nnoremap <F5> :up <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
