@@ -13,6 +13,8 @@ Plugin 'tmhedberg/SimpylFold'
 "优化Python缩进"
 "Plugin 'vim-scripts/indentpython.vim'
 "Plugin 'klen/python-mode'
+"Fcitx key
+Plugin 'lilydjwg/fcitx.vim'
 "自动完成"
 Plugin 'Valloric/YouCompleteMe'
 " Snips(改变Tab键行为)
@@ -31,7 +33,7 @@ Plugin 'Raimondi/delimitMate'
 "环绕符号(套括号,引号)
 "Plugin 'tpope/vim-surround'
 "代码检查与高亮"
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 " Jinja代码高亮
 Plugin 'Glench/Vim-Jinja2-Syntax'
 "python实时代码检查
@@ -65,6 +67,8 @@ Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+
+set term=xterm
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Apearance                                  "
@@ -255,6 +259,25 @@ imap <C-v>  <Esc>l<C-v>
 "better copy & paste
 set pastetoggle=<F2>
 set clipboard=unnamed
+inoremap <Home> <C-r>=Home('i')<CR>
+inoremap <kHome> <C-r>=Home('i')<CR>
+nnoremap <kHome> i<C-r>=Home('n')<CR>
+nnoremap <Home> i<C-r>=Home('n')<CR>
+
+"make <Home> switch between begin and first not empty char
+function! Home(mod)
+    let a:unempty=0
+    let a:gl=getline('.')
+    for i in range(0,col('.')-2)
+        let a:unempty+= a:gl[i]!=' ' && a:gl[i]!='\t'
+    endfor
+    if a:unempty || col('.')==1
+        return a:mod=='i' ? "\<esc>^": "\<esc>^i"
+    else
+        return a:mod=='i' ? "\<esc>\<home>i" : "\<esc>\<home>"
+    endif
+endfunction
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Buffer                                    "
@@ -346,7 +369,7 @@ map <Leader>t <esc>:tabnew<CR>
 map <Leader>w <esc>:tabclose<CR>
 "open the exprole
 map <Leader>e <esc>:e.<CR>
-"Leader [n,m] were disable please use C-A-[PgUp,PgDn] to shitch tab
+"Leader [n,m] were disable please use C-A-[Up,Dn] to shitch tab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Running                                   "
@@ -357,12 +380,12 @@ autocmd filetype python nnoremap <F5> :up <bar> exec '!python3 '.shellescape('%'
 autocmd filetype python imap <F5> <Esc><F5>
 
 autocmd filetype c nnoremap <F5> :up <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-autocmd filetype c nnoremap <F4> :up <bar> :!gcc % -g -o `basename % .c` && cgdb `basename % .c`<CR>
+autocmd filetype c nnoremap <F4> :up <bar> :!gcc % -g -o `basename % .c` && gdb `basename % .c`<CR>
 autocmd filetype c imap <F5> <Esc><F5>
 autocmd filetype c imap <F4> <Esc><F4>
 
-autocmd filetype cpp nnoremap <F5> :up <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-autocmd filetype cpp nnoremap <F4> :up <bar> :!g++ % -g -o `basename % .cpp` && cgdb `basename % .cpp` <CR>
+autocmd filetype cpp nnoremap <F5> :up <bar> exec '!g++ -std=c++11 '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F4> :up <bar> :!g++ -std=c++11 % -g -o `basename % .cpp` && gdb `basename % .cpp` <CR>
 autocmd filetype cpp imap <F5> <Esc><F5>
 autocmd filetype cpp imap <F4> <Esc><F4>
 
