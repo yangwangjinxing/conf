@@ -108,10 +108,6 @@ alias -s bz2='tar -xjvf'
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
 
-alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
-
-alias dict='python ~/git/dict/dict.py'
-
 #修改键盘映射
 #export AUTO_RUN= $(source auto.sh)
 
