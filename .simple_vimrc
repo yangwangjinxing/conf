@@ -1,0 +1,213 @@
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  Apearance                                  "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set laststatus=2    "always show the statusline
+
+"Color scheme
+"USe 256bit Color
+set t_Co=256
+"color wombat256mod
+
+"Python 高亮优化
+let python_highlight_all=1
+syntax on
+" Enable folding 开启代码折叠//热键za
+set foldmethod=indent   "按缩进折叠"
+set foldlevel=99"
+" 使用f折叠
+nnoremap f za
+"开启折叠预览
+let g:SimpylFold_docstring_preview=1
+"set nofoldenable
+
+
+
+"按键配置
+
+"Rebind <leader> key
+let mapleader = " "
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Code Standard                                "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set tabstop=4 
+set softtabstop=4 
+set shiftwidth=4 
+set textwidth=79 
+set expandtab 
+set autoindent 
+set fileformat=unix
+
+"Index for Full Stack前端缩进
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+set encoding=utf-8 |
+
+"Showing length
+set number     "show line numbers
+set tw=79      "width of length
+
+"set nowarp     "don't automattically wrap on load
+set fo-=t      "don't automattically warp text when typing
+set colorcolumn=80
+highlight ColorColumn ctermbg=23  "grey line at right
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc               "ignore somefile on ctrlp list
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+
+"set history reg bigger
+set history=700
+set undolevels=700
+
+"标示行末空白字符
+"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+" highlight tabs and trailing spaces
+"set listchars=tab:>-,trail:-
+"set list
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               Custom Shortcut                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" save using F12
+noremap <F12> :up<CR>
+noremap <C-F12> :x!<CR>
+imap <F12> <Esc><F12>
+imap <C-F12> <Esc><C-F12>
+" exit without save
+nnoremap <M-F12> <Esc>:q!<CR>
+imap <M-F12> <Esc><M-F12>
+
+
+" move line up or dn
+imap <C-d> <Esc>yyp
+map <C-up> <up>ddp<up>
+map <c-down> ddp
+imap <C-up> <Esc><c-up>
+imap <C-down> <Esc>ddp
+imap <C-BS> <Esc>db
+imap <C-v>  <Esc>l<C-v>
+
+"better copy & paste
+set pastetoggle=<F2>
+set clipboard=unnamed
+inoremap <Home> <C-r>=Home('i')<CR>
+inoremap <kHome> <C-r>=Home('i')<CR>
+nnoremap <kHome> i<C-r>=Home('n')<CR>
+nnoremap <Home> i<C-r>=Home('n')<CR>
+
+"change a word
+nnoremap ca caw
+nnoremap va vaw
+nnoremap vA ggVG"+y
+
+"make <Home> switch between begin and first not empty char
+function! Home(mod)
+    let a:unempty=0
+    let a:gl=getline('.')
+    for i in range(0,col('.')-2)
+        let a:unempty+= a:gl[i]!=' ' && a:gl[i]!='\t'
+    endfor
+    if a:unempty || col('.')==1
+        return a:mod=='i' ? "\<esc>^i": "\<esc>^"
+    else
+        return a:mod=='i' ? "\<esc>\<home>i" : "\<esc>\<home>"
+    endif
+endfunction
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Buffer                                    "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"comband select line to one  /using in css js ect.
+vmap Q gq
+nmap Q gqap
+
+"auto read & write
+set autoread
+set autowrite
+
+"Don't use swap file    
+"If you edit a file from diff terminal it will useful
+set nobackup
+"set nowirtebackup
+set noswapfile
+
+"Mouse and backspace
+set mouse=a "Mouse on whit Alt and click"
+"set bs=2    "BackSpace to del on insert mode (default)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Search Seting                                "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Remove highlight Of last search
+noremap <C-\> :nohl<CR>
+vnoremap <C-\> <Esc>:nohl<CR>
+inoremap <C-\> <ESC>:nohl<CR>
+set hlsearch
+set incsearch   "show match while typing
+set ignorecase  "ignorecase search by default
+set smartcase   "do not ignorecase when pattrn have Upcase
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    Sort                                     "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+vnoremap <Leader>s :sort<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Layout                                    "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"multi display & moving
+set splitbelow
+set splitright
+"使用C-hjkl切换布局
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"create new tab
+map <Leader>t <esc>:tabnew<CR>
+"close the tab
+map <Leader>w <esc>:tabclose<CR>
+"open the exprole
+map <Leader>e <esc>:e.<CR>
+map <Leader>E <esc>:NERDTree<CR>
+nmap E <esc>:NERDTree<CR>
+"Leader [n,m] were disable please use C-A-[Up,Dn] to shitch tab
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Running                                   "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"<F4> to debug ,<F5> to run
+autocmd filetype python nnoremap <F5> :up <bar> exec '!python3 '.shellescape('%')<CR>
+autocmd filetype python imap <F5> <Esc><F5>
+
+autocmd filetype c nnoremap <F5> :up <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype c nnoremap <F4> :up <bar> :!gcc % -g -o `basename % .c` && gdb `basename % .c`<CR>
+autocmd filetype c imap <F5> <Esc><F5>
+autocmd filetype c imap <F4> <Esc><F4>
+
+autocmd filetype cpp nnoremap <F5> :up <bar> exec '!g++ -std=c++11 '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F4> :up <bar> :!g++ -std=c++11 % -g -o `basename % .cpp` && gdb `basename % .cpp` <CR>
+autocmd filetype cpp imap <F5> <Esc><F5>
+autocmd filetype cpp imap <F4> <Esc><F4>
+
+autocmd filetype java nnoremap <F5> :up <bar> :!javac %; java `basename % .java`<CR>
+autocmd filetype java imap <F5> <Esc><F5>
+
+autocmd FileType sh nnoremap <F5> :up <bar> :!chmod +x % && ./%<CR>
+autocmd FileType sh imap <F5> <Esc><F5>
+
