@@ -102,11 +102,11 @@ syntax on
 " Enable folding 开启代码折叠//热键za
 set foldmethod=indent   "按缩进折叠"
 set foldlevel=99"
-" Enable folding with the spacebar//使用f折叠
-"nnoremap f za
+" 使用f折叠
+nnoremap f za
 "开启折叠预览
 let g:SimpylFold_docstring_preview=1
-set nofoldenable
+"set nofoldenable
 
 
 
@@ -264,6 +264,11 @@ inoremap <kHome> <C-r>=Home('i')<CR>
 nnoremap <kHome> i<C-r>=Home('n')<CR>
 nnoremap <Home> i<C-r>=Home('n')<CR>
 
+"change a word
+nnoremap ca caw
+nnoremap va vaw
+nnoremap vA ggVG"+y
+
 "make <Home> switch between begin and first not empty char
 function! Home(mod)
     let a:unempty=0
@@ -272,7 +277,7 @@ function! Home(mod)
         let a:unempty+= a:gl[i]!=' ' && a:gl[i]!='\t'
     endfor
     if a:unempty || col('.')==1
-        return a:mod=='i' ? "\<esc>^": "\<esc>^i"
+        return a:mod=='i' ? "\<esc>^i": "\<esc>^"
     else
         return a:mod=='i' ? "\<esc>\<home>i" : "\<esc>\<home>"
     endif
@@ -345,10 +350,10 @@ imap <C-e> <Esc><C-y>,
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  MarkDown                                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd filetype md map <silent> <F8> <Plug>MarkdownPreview        " for normal mode
-autocmd filetype md imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
-autocmd filetype md nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
-autocmd filetype md imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
+autocmd filetype markdown map <silent> <F8> <Plug>MarkdownPreview        " for normal mode
+autocmd filetype markdown imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
+autocmd filetype markdown nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
+autocmd filetype markdown imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Layout                                    "
@@ -369,6 +374,8 @@ map <Leader>t <esc>:tabnew<CR>
 map <Leader>w <esc>:tabclose<CR>
 "open the exprole
 map <Leader>e <esc>:e.<CR>
+map <Leader>E <esc>:NERDTree<CR>
+nmap E <esc>:NERDTree<CR>
 "Leader [n,m] were disable please use C-A-[Up,Dn] to shitch tab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
